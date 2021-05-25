@@ -9,15 +9,17 @@ def phi(i, t, s, L, eta, mu):
 def evaluate(L, eta, mu):
 	t=0.0
 	Ts=1e-4
-	tlen=3.0
+	tlen=10.0
 	tloop=int(tlen/Ts)
-	f=3.0
+	f=[3.0,5.0,8.0]
 	nu=[0.0, 0.0]
 	z=[0.0, 0.0]
 	score=0.0
 	for i in range(tloop):
-		x=1.0-math.cos(2.0*math.pi*f*t)
-		y=2.0*math.pi*f*math.sin(2.0*math.pi*f*t)
+		x=+1.0-math.cos(2.0*math.pi*f[0]*t)
+		x+=1.0-math.cos(2.0*math.pi*f[1]*t)
+		y=+2.0*math.pi*f[0]*math.sin(2.0*math.pi*f[0]*t)
+		y+=2.0*math.pi*f[1]*math.sin(2.0*math.pi*f[1]*t)
 		nu[0] = -phi(0, t, z[0]-x, L, eta, mu) + z[1]
 		nu[1] = -phi(1, t, z[1]-nu[0], L, eta, mu)
 		z[0] += nu[0]*Ts
@@ -55,16 +57,18 @@ eta=[study.best_params['eta1'], study.best_params['eta2']]
 mu=[study.best_params['mu1'], study.best_params['mu2']]
 t=0.0
 Ts=1e-4
-tlen=3.0
+tlen=10.0
 tloop=int(tlen/Ts)
-f=3.0
+f=[3.0,5.0,8.0]
 nu=[0.0, 0.0]
 z=[0.0, 0.0]
 score=0.0
 file= open('pydata.dat', 'w', encoding='UTF-8')
 for i in range(tloop):
-	x=1.0-math.cos(2.0*math.pi*f*t)
-	y=2.0*math.pi*f*math.sin(2.0*math.pi*f*t)
+	x=+1.0-math.cos(2.0*math.pi*f[0]*t)
+	x+=1.0-math.cos(2.0*math.pi*f[1]*t)
+	y=+2.0*math.pi*f[0]*math.sin(2.0*math.pi*f[0]*t)
+	y+=2.0*math.pi*f[1]*math.sin(2.0*math.pi*f[1]*t)
 	nu[0] = -phi(0, t, z[0]-x, L, eta, mu) + z[1]
 	nu[1] = -phi(1, t, z[1]-nu[0], L, eta, mu)
 	z[0] += nu[0]*Ts
